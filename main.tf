@@ -137,6 +137,7 @@ provider "aws" {
 #               sudo yum install httpd -y
 #               sudo systemctl start httpd
 #               sudo bash echo "Your prod server is up > /var/www/html/index.html"
+#               curl -I http://localhost
 #               EOF
-
 # }
+
