@@ -133,10 +133,10 @@ provider "aws" {
 # # install apache in web server
 #   user_data = <<-EOF
 #               #!/bin/bash
-#               sudo apt update -y
-#               sudo apt install apache2 -y
-#               sudo systemctl start apache2
-#               sudo bash echo "Your prod server is up > /var/www/index.html"
+#               sudo yum update -y
+#               sudo yum install httpd -y
+#               sudo systemctl start httpd
+#               sudo bash echo "Your prod server is up > /var/www/html/index.html"
 #               EOF
 
 # }
