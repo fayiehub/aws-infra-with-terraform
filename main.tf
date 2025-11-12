@@ -1,3 +1,12 @@
+terraform {
+  required_providers {
+    aws = {
+      source = "hashicorp/aws"
+      version = "6.18.0"
+    }
+  }
+}
+
 # Configure the AWS Provider
 provider "aws" {
   region = "us-east-1"
@@ -5,7 +14,7 @@ provider "aws" {
   secret_key = "**************************************"
 }
 
-# # Create VPC
+# Create VPC
 # resource "aws_vpc" "vpc-1" {
 #   cidr_block = "10.1.0.0/16"
 #   tags = {
@@ -37,14 +46,30 @@ provider "aws" {
 #   }
 # }
 
+# variable subnet_prefix {
+#   # default     = "" # for when there's no value in the tfvars file.
+#   description = "prefix for the subnet"
+# }
+
+
 # # Create Subnet
 # resource "aws_subnet" "subnet-1" {
 #   vpc_id     = aws_vpc.vpc-1.id
-#   cidr_block = "10.1.1.0/24"
+#   cidr_block = var.subnet_prefix[0].cidr_block
 #   availability_zone = "us-east-1a"
 
 #   tags = {
-#     Name = "prod-subnet"
+#     Name = var.subnet_prefix[0].name
+#   }
+# }
+
+# resource "aws_subnet" "subnet-2" {
+#   vpc_id     = aws_vpc.vpc-1.id
+#   cidr_block = var.subnet_prefix[1].cidr_block
+#   availability_zone = "us-east-1a"
+
+#   tags = {
+#     Name = var.subnet_prefix[1].name
 #   }
 # }
 
@@ -115,6 +140,13 @@ provider "aws" {
 #   depends_on                = [aws_internet_gateway.igw]
 # }
 
+# output "server_public_ip" {
+#   value       = aws_eip.eip.public_ip
+#   description = "Public IP attached to our elastic ip"
+
+# }
+
+
 # # Create Ubuntu server
 # resource "aws_instance" "example" {
 #   ami           = "ami-0bdd88bd06d16ba03"
@@ -139,5 +171,18 @@ provider "aws" {
 #               sudo bash echo "Your prod server is up > /var/www/html/index.html"
 #               curl -I http://localhost
 #               EOF
+# }
+
+# output "server_volume_id" {
+#   value = aws_instance.example.root_block_device
+# }
+# output "server_private_ip" {
+#   value = aws_instance.example.private_ip
+# }
+# output "server_public_dns" {
+#   value = aws_instance.example.public_dns
+# }
+# output "server_id" {
+#   value = aws_instance.example.id
 # }
 
